@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        input[type="submit"], button[type="button"] {
+            width: 48%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button[type="button"] {
+            background-color: #f44336;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        button[type="button"]:hover {
+            background-color: #e53935;
+        }
+        .result-container {
+            background-color: #eaf8e6;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+        .result-container h2 {
+            margin: 0;
+            color: #2e7d32;
+        }
+        .result-container img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        function clearResult() {
+            document.querySelector('.result-container').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Dự đoán loài hoa Iris</h1>
+        <p>Trang web này sử dụng mô hình học máy để dự đoán loài của hoa Iris dựa trên các thông số đầu vào như chiều dài và chiều rộng của cánh hoa và đài hoa. Tập dữ liệu Iris là một trong những tập dữ liệu nổi tiếng nhất trong học máy, bao gồm ba loài hoa Iris: Setosa, Versicolor, và Virginica.</p>
+
+        <form method="POST" action="/predict">
+            <label for="sepal_length">Sepal Length:</label>
+            <input type="text" id="sepal_length" name="sepal_length" required placeholder="Nhập vào với đơn vị (cm)">
+
+            <label for="sepal_width">Sepal Width:</label>
+            <input type="text" id="sepal_width" name="sepal_width" required placeholder="Nhập vào với đơn vị (cm)">
+
+            <label for="petal_length">Petal Length:</label>
+            <input type="text" id="petal_length" name="petal_length" required placeholder="Nhập vào với đơn vị (cm)">
+
+            <label for="petal_width">Petal Width:</label>
+            <input type="text" id="petal_width" name="petal_width" required placeholder="Nhập vào với đơn vị (cm)">
+
+            <div class="button-container">
+                <input type="submit" value="Dự đoán">
+                <button type="button" onclick="clearResult()">Clear</button>
+            </div>
+
+            {% if prediction is not none %}
+                <div class="result-container">
+                    <h2>Kết quả dự đoán: {{ prediction }}</h2>
+                    <img src="{{ image }}" alt="{{ prediction }}">
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
