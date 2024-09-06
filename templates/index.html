@@ -28,7 +28,7 @@
         h1 {
             color: #333;
             margin-bottom: 20px;
-            font-size: 24px; /* Font size for larger screens */
+            font-size: 24px;
         }
         p {
             color: #555;
@@ -64,7 +64,7 @@
             gap: 10px;
         }
         input[type="submit"], button[type="button"] {
-            width: 100%;
+            width: 100%; /* Full width buttons on small screens */
             background-color: #4CAF50;
             color: white;
             padding: 10px;
@@ -104,6 +104,12 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .error-message {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
 
         @media (max-width: 600px) {
             h1 {
@@ -124,6 +130,24 @@
         function clearResult() {
             document.querySelector('.result-container').style.display = 'none';
         }
+
+        function validateForm(event) {
+            const sepalLength = document.getElementById('sepal_length').value;
+            const sepalWidth = document.getElementById('sepal_width').value;
+            const petalLength = document.getElementById('petal_length').value;
+            const petalWidth = document.getElementById('petal_width').value;
+
+            const inputs = [sepalLength, sepalWidth, petalLength, petalWidth];
+            const errorMessageElement = document.getElementById('error-message');
+            const isValid = inputs.every(input => !isNaN(parseFloat(input)) && isFinite(input));
+
+            if (!isValid) {
+                errorMessageElement.textContent = 'Vui lòng nhập các số hợp lệ cho tất cả các trường.';
+                event.preventDefault(); // Prevent form submission
+            } else {
+                errorMessageElement.textContent = '';
+            }
+        }
     </script>
 </head>
 <body>
@@ -131,7 +155,7 @@
         <h1>Dự đoán loài hoa Iris</h1>
         <p>Trang web này sử dụng mô hình học máy để dự đoán loài của hoa Iris dựa trên các thông số đầu vào như chiều dài và chiều rộng của cánh hoa và đài hoa. Tập dữ liệu Iris là một trong những tập dữ liệu nổi tiếng nhất trong học máy, bao gồm ba loài hoa Iris: Setosa, Versicolor, và Virginica.</p>
 
-        <form method="POST" action="/predict">
+        <form method="POST" action="/predict" onsubmit="validateForm(event)">
             <label for="sepal_length">Sepal Length:</label>
             <input type="text" id="sepal_length" name="sepal_length" required placeholder="Nhập vào với đơn vị (cm)">
 
@@ -148,6 +172,7 @@
                 <input type="submit" value="Dự đoán">
                 <button type="button" onclick="clearResult()">Clear</button>
             </div>
+            <div id="error-message" class="error-message"></div>
 
             {% if prediction is not none %}
                 <div class="result-container">
