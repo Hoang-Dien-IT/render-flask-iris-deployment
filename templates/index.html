@@ -28,6 +28,7 @@
         h1 {
             color: #333;
             margin-bottom: 20px;
+            font-size: 24px; /* Font size for larger screens */
         }
         p {
             color: #555;
@@ -59,10 +60,11 @@
         }
         .button-container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
         }
         input[type="submit"], button[type="button"] {
-            width: 48%;
+            width: 100%;
             background-color: #4CAF50;
             color: white;
             padding: 10px;
@@ -71,7 +73,6 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
-            margin-top: 10px;
         }
         button[type="button"] {
             background-color: #f44336;
@@ -102,6 +103,21 @@
             margin-top: 10px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .container {
+                padding: 15px;
+            }
+            input[type="text"] {
+                font-size: 14px;
+            }
         }
     </style>
     <script>
